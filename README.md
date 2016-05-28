@@ -1,7 +1,7 @@
 # PizzaShack - A Csharp .NET technology demo
 PizzaShack is a Visual Studio 2015 solution composed out of an MVC project and a unit test project.  It is meant to display various ways of implementing most basic web app functionality.
 
-PizzaShack is a basic web app that allows you to create orders of Pizza, view them, and update their status.
+PizzaShack is a basic web app that allows you to create pizza orders, view them, and update their status.
 
 ## Contents
 
