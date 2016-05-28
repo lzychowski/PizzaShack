@@ -1,4 +1,4 @@
-# PizzaShack - A Visual Studio technology demo
+# PizzaShack - A Csharp .NET technology demo
 PizzaShack is a Visual Studio 2015 solution composed out of an MVC project and a unit test project.  It is meant to display various ways of implementing most basic web app functionality.
 
 ## Contents
