@@ -38,50 +38,7 @@ By no means this is to be treated as the best way to code.  The goal of this pro
 
   1. `<add name="Entities" connectionString="metadata=res://*/Models.Pizza.csdl|res://*/Models.Pizza.ssdl|res://*/Models.Pizza.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source={SERVER};initial catalog={SERVER_DATABASE};persist security info=True;user id={USER_NAME};password={PASSWORD};MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" /></connectionStrings>`
   
-5. Once your data source and publish credentials are set, you can run the following SQL statements on your MS SQL database (also provided in Solution > PizzaShack > SQL > tables.sql file):
-
-```
-CREATE TABLE [dbo].[statustypes]
-(
-	[statustypeid] INT IDENTITY(1,1) PRIMARY KEY,
-	[name] VARCHAR(50) NOT NULL
-)
-```
-```
-INSERT INTO [dbo].[statustypes] VALUES ('Pending'), ('Baking'), ('Completed'), ('Closed')
-```
-```
-CREATE TABLE [dbo].[ingredients]
-(
-	[ingredientid] INT IDENTITY(1,1) PRIMARY KEY,
-	[name] VARCHAR(50) NOT NULL,
-	[price] DECIMAL(5,2) NOT NULL
-)
-```
-```
-INSERT INTO [dbo].[ingredients] VALUES ('Cheese', 2.00), ('Sauce', 2.00), ('Sausage', 3.00), ('Onion', 1.00)
-```
-```
-CREATE TABLE [dbo].[orders]
-(
-	[orderid] INT IDENTITY(1,1) PRIMARY KEY,
-	[name] VARCHAR(50),
-	[phonenumber] VARCHAR(50) NOT NULL,
-	[password] VARCHAR(50) NOT NULL,
-	[pickupdatetime] DATETIME NOT NULL,
-	[startdatetime] DATETIME NULL,
-	[enddatetime] DATETIME NULL,
-	[statustype] INT NOT NULL FOREIGN KEY REFERENCES statustypes(statustypeid)
-)
-```
-```
-CREATE TABLE [dbo].[orderingredients]
-(
-	[orderid] INT NOT NULL FOREIGN KEY REFERENCES orders(orderid),
-	[ingredientid] INT NOT NULL FOREIGN KEY REFERENCES ingredients(ingredientid),
-	[quantity] INT NOT NULL
-)
-```
+5. Once your data source and publish credentials are set, you can run the SQL statements located in Solution > PizzaShack > SQL > tables.sql file.
 
 6. You should be ready to go.  Run the project.
 
