@@ -25,7 +25,7 @@ By no means this is to be treated as the best way to code.  The goal of this pro
 ## Setup
 
 1. Pull solution.
-2. Open in Visual Studio 2013/2015
+2. Open in Visual Studio 2013/2015.
 3. Edit PizzaShack.pubxml file (Solution > PizzaShack > Properties > PublishProfiles) and update the following:
 
   1. `<MSDeployServiceURL>{AZURE_URL}</MSDeployServiceURL>`
