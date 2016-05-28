@@ -1,6 +1,8 @@
 # PizzaShack - A Csharp .NET technology demo
 PizzaShack is a Visual Studio 2015 solution composed out of an MVC project and a unit test project.  It is meant to display various ways of implementing most basic web app functionality.
 
+PizzaShack is a basic web app that allows you to create orders of Pizza, view them, and update their status.
+
 ## Contents
 
 * PizzaShack MVC project with a bit of everything (forms, AJAX, DI, data access etc.)
@@ -14,11 +16,13 @@ PizzaShack is a Visual Studio 2015 solution composed out of an MVC project and a
 * MOQ (mocking library for testing) https://github.com/moq/moq4
 * Form POST
 * AJAX POST
+* Create, Read, and Update operations
 * ADO.NET Data Model created from Database https://msdn.microsoft.com/en-us/data/jj206878.aspx
 * Custom Repository Pattern https://msdn.microsoft.com/en-us/library/ff649690.aspx
 * ASP.NET Razor basic templates https://en.wikipedia.org/wiki/ASP.NET_Razor
 * Publish script for Azure App Service
 * Datasource for Azure SQL Database
+* jQuery DataTable
 
 By no means this is to be treated as the best way to code.  The goal of this project was to demonstrate how certain things can be accomplished.
 
