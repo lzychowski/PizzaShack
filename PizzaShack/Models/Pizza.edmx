@@ -1,0 +1,277 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ingredients">
+          <Key>
+            <PropertyRef Name="ingredientid" />
+          </Key>
+          <Property Name="ingredientid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view '{SERVER_DATABASE}.dbo.orderingredients' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="orderingredients">
+          <Key>
+            <PropertyRef Name="orderid" />
+            <PropertyRef Name="ingredientid" />
+            <PropertyRef Name="quantity" />
+          </Key>
+          <Property Name="orderid" Type="int" Nullable="false" />
+          <Property Name="ingredientid" Type="int" Nullable="false" />
+          <Property Name="quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="orders">
+          <Key>
+            <PropertyRef Name="orderid" />
+          </Key>
+          <Property Name="orderid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="phonenumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="pickupdatetime" Type="datetime" Nullable="false" />
+          <Property Name="startdatetime" Type="datetime" />
+          <Property Name="enddatetime" Type="datetime" />
+          <Property Name="statustypeid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="statustypes">
+          <Key>
+            <PropertyRef Name="statustypeid" />
+          </Key>
+          <Property Name="statustypeid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__orderingr__ingre__403A8C7D">
+          <End Role="ingredients" Type="Self.ingredients" Multiplicity="1" />
+          <End Role="orderingredients" Type="Self.orderingredients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ingredients">
+              <PropertyRef Name="ingredientid" />
+            </Principal>
+            <Dependent Role="orderingredients">
+              <PropertyRef Name="ingredientid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__orderingr__order__3F466844">
+          <End Role="orders" Type="Self.orders" Multiplicity="1" />
+          <End Role="orderingredients" Type="Self.orderingredients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="orderid" />
+            </Principal>
+            <Dependent Role="orderingredients">
+              <PropertyRef Name="orderid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__orders__statusty__3A81B327">
+          <End Role="statustypes" Type="Self.statustypes" Multiplicity="1" />
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="statustypes">
+              <PropertyRef Name="statustypeid" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="statustypeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="ingredients" EntityType="Self.ingredients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="orders" EntityType="Self.orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="statustypes" EntityType="Self.statustypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="orderingredients" EntityType="Self.orderingredients" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [orderingredients].[orderid] AS [orderid], 
+    [orderingredients].[ingredientid] AS [ingredientid], 
+    [orderingredients].[quantity] AS [quantity]
+    FROM [dbo].[orderingredients] AS [orderingredients]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__orderingr__ingre__403A8C7D" Association="Self.FK__orderingr__ingre__403A8C7D">
+            <End Role="ingredients" EntitySet="ingredients" />
+            <End Role="orderingredients" EntitySet="orderingredients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__orderingr__order__3F466844" Association="Self.FK__orderingr__order__3F466844">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="orderingredients" EntitySet="orderingredients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__orders__statusty__3A81B327" Association="Self.FK__orders__statusty__3A81B327">
+            <End Role="statustypes" EntitySet="statustypes" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ingredient">
+          <Key>
+            <PropertyRef Name="ingredientid" />
+          </Key>
+          <Property Name="ingredientid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="price" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <NavigationProperty Name="orderingredients" Relationship="Self.FK__orderingr__ingre__403A8C7D" FromRole="ingredients" ToRole="orderingredients" />
+        </EntityType>
+        <EntityType Name="order">
+          <Key>
+            <PropertyRef Name="orderid" />
+          </Key>
+          <Property Name="orderid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phonenumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pickupdatetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="startdatetime" Type="DateTime" Precision="3" />
+          <Property Name="enddatetime" Type="DateTime" Precision="3" />
+          <Property Name="statustypeid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="orderingredients" Relationship="Self.FK__orderingr__order__3F466844" FromRole="orders" ToRole="orderingredients" />
+          <NavigationProperty Name="statustype" Relationship="Self.FK__orders__statusty__3A81B327" FromRole="orders" ToRole="statustypes" />
+        </EntityType>
+        <EntityType Name="statustype">
+          <Key>
+            <PropertyRef Name="statustypeid" />
+          </Key>
+          <Property Name="statustypeid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="orders" Relationship="Self.FK__orders__statusty__3A81B327" FromRole="statustypes" ToRole="orders" />
+        </EntityType>
+        <EntityType Name="orderingredient">
+          <Key>
+            <PropertyRef Name="orderid" />
+            <PropertyRef Name="ingredientid" />
+            <PropertyRef Name="quantity" />
+          </Key>
+          <Property Name="orderid" Type="Int32" Nullable="false" />
+          <Property Name="ingredientid" Type="Int32" Nullable="false" />
+          <Property Name="quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ingredient" Relationship="Self.FK__orderingr__ingre__403A8C7D" FromRole="orderingredients" ToRole="ingredients" />
+          <NavigationProperty Name="order" Relationship="Self.FK__orderingr__order__3F466844" FromRole="orderingredients" ToRole="orders" />
+        </EntityType>
+        <Association Name="FK__orderingr__ingre__403A8C7D">
+          <End Role="ingredients" Type="Self.ingredient" Multiplicity="1" />
+          <End Role="orderingredients" Type="Self.orderingredient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ingredients">
+              <PropertyRef Name="ingredientid" />
+            </Principal>
+            <Dependent Role="orderingredients">
+              <PropertyRef Name="ingredientid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__orderingr__order__3F466844">
+          <End Role="orders" Type="Self.order" Multiplicity="1" />
+          <End Role="orderingredients" Type="Self.orderingredient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="orderid" />
+            </Principal>
+            <Dependent Role="orderingredients">
+              <PropertyRef Name="orderid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__orders__statusty__3A81B327">
+          <End Role="statustypes" Type="Self.statustype" Multiplicity="1" />
+          <End Role="orders" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="statustypes">
+              <PropertyRef Name="statustypeid" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="statustypeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ingredients" EntityType="Self.ingredient" />
+          <EntitySet Name="orders" EntityType="Self.order" />
+          <EntitySet Name="statustypes" EntityType="Self.statustype" />
+          <EntitySet Name="orderingredients" EntityType="Self.orderingredient" />
+          <AssociationSet Name="FK__orderingr__ingre__403A8C7D" Association="Self.FK__orderingr__ingre__403A8C7D">
+            <End Role="ingredients" EntitySet="ingredients" />
+            <End Role="orderingredients" EntitySet="orderingredients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__orderingr__order__3F466844" Association="Self.FK__orderingr__order__3F466844">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="orderingredients" EntitySet="orderingredients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__orders__statusty__3A81B327" Association="Self.FK__orders__statusty__3A81B327">
+            <End Role="statustypes" EntitySet="statustypes" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="ingredients">
+            <EntityTypeMapping TypeName="Model.ingredient">
+              <MappingFragment StoreEntitySet="ingredients">
+                <ScalarProperty Name="ingredientid" ColumnName="ingredientid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="price" ColumnName="price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orders">
+            <EntityTypeMapping TypeName="Model.order">
+              <MappingFragment StoreEntitySet="orders">
+                <ScalarProperty Name="orderid" ColumnName="orderid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="phonenumber" ColumnName="phonenumber" />
+                <ScalarProperty Name="pickupdatetime" ColumnName="pickupdatetime" />
+                <ScalarProperty Name="startdatetime" ColumnName="startdatetime" />
+                <ScalarProperty Name="enddatetime" ColumnName="enddatetime" />
+                <ScalarProperty Name="statustypeid" ColumnName="statustypeid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="statustypes">
+            <EntityTypeMapping TypeName="Model.statustype">
+              <MappingFragment StoreEntitySet="statustypes">
+                <ScalarProperty Name="statustypeid" ColumnName="statustypeid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orderingredients">
+            <EntityTypeMapping TypeName="Model.orderingredient">
+              <MappingFragment StoreEntitySet="orderingredients">
+                <ScalarProperty Name="orderid" ColumnName="orderid" />
+                <ScalarProperty Name="ingredientid" ColumnName="ingredientid" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

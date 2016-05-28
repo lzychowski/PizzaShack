@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>@ViewBag.Title</title>
+
+		<link rel="icon" type="image/vnd.microsoft.icon" href="~/Content/favicon.ico" />
+
+		@Styles.Render("~/Content/css")
+		@Scripts.Render("~/bundles/modernizr")
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+		<link href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" rel="stylesheet"/>
+
+		@Scripts.Render("~/bundles/jquery")
+		<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js"></script>
+		<script>
+			var windowLocation = '@Request.Url.AbsoluteUri';
+		</script>
+	</head>
+
+	<body>
+
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a href="@Html.Raw(Url.RouteUrl("CreateOrder"))" class="navbar-brand">
+						<span style="margin-right: 15px;"><i class="fa fa-cutlery fa-3"></i></span>Order Pizza
+					</a>
+				</div>
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li>@Html.ActionLink("Pending Orders", "ViewPendingOrders", "Home")</li>
+						<li>@Html.ActionLink("Baked or Paid Orders", "ViewCompletedOrders", "Home")</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="container body-content">
+			@RenderBody()
+			<hr />
+			<footer>
+				<p>&copy; @DateTime.Now.Year - Pizza Ordering system</p>
+			</footer>
+		</div>
+
+		@Scripts.Render("~/bundles/bootstrap")
+		@RenderSection("scripts", required: false)
+	</body>
+
+</html>

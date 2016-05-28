@@ -1,0 +1,63 @@
+﻿@model List<PizzaShack.Models.ingredient>
+
+@{
+	ViewBag.Title = "Create Order";
+}
+
+@section scripts{
+	<script>
+		$("#form-create-order").validate();
+	</script>
+}
+<h2>@ViewBag.Title</h2>
+<h3 style="color:red;">@(ViewBag.Error ?? Html.Raw(""))</h3>
+
+<div class="container" style="margin-top: 25px;">
+	<div style="display:none" id="form-create-order" class="alert alert-danger col-sm-12"></div>
+	@using (Html.BeginRouteForm("CreateOrderPost", FormMethod.Post, new { @class = "form-horizontal", @role = "form", @id = "form-create-order", @name = "form" }))
+	{
+		<div style="margin-bottom: 15px;" class="form-group">
+			<label for="input-name" class="col-sm-2 control-label">Name *</label>
+			<div class="col-sm-10">
+				<input id="input-name" type="text" class="form-control" name="name" value="" placeholder="name" required>
+			</div>
+		</div>
+
+		<div style="margin-bottom: 15px;" class="form-group">
+			<label for="input-phone-number" class="col-sm-2 control-label">Phone Number *</label>
+			<div class="col-sm-10">
+				<input id="input-phone-number" type="text" class="form-control" name="phoneNumber" value="" placeholder="phone number" required>
+			</div>
+		</div>
+
+		<div style="margin-bottom: 15px;" class="form-group">
+			<label for="input-pickup-date" class="col-sm-2 control-label">Ready for pickup in *</label>
+			<div class="col-sm-2">
+				<input id="input-pickup-date" type="text" class="form-control" name="pickupDateTime" value="" placeholder="MM" required>
+			</div>
+			<label for="" class="col-sm-8 control-label" style="text-align:left">minutes</label>
+		</div>
+
+		int i = 0;
+		if (Model != null)
+		{
+			foreach (var ingredient in Model)
+			{
+				<div style="margin-bottom: 15px;" class="form-group">
+					<label for="add-user-email" class="col-sm-2 control-label">@ingredient.name</label>
+					<div class="col-sm-10">
+						<input type="hidden" name="ingredients[@i].orderid" value="1" />
+						<input type="hidden" name="ingredients[@i].ingredientid" value="@ingredient.ingredientid" />
+						<input id="ingredient-quantity" type="text" class="form-control" name="ingredients[@i].quantity" value="0" placeholder="quantity">
+					</div>
+				</div>
+				i++;
+			}
+		}
+		<div style="margin-bottom: 15px;" style="margin-top:10px" class="form-group">
+			<div class="col-sm-offset-2 col-sm-10 controls">
+				<button type="submit" id="btn-create-order" href="#" class="btn btn-success">Create Order</button>
+			</div>
+		</div>
+	}		
+</div>
